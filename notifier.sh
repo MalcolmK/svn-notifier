@@ -3,6 +3,13 @@
 # Global vars
 local_working_copy=$1
 
+# Crontab interval values
+crontab_interval_minute="*/15"          # Every 15 minutes
+crontab_interval_hour="*"               # Every hour
+crontab_interval_day_of_month="*"       # Every day of the month
+crontab_interval_month="*"              # Every month
+crontab_interval_day_of_week="*"        # Every day
+
 # Functions
 function getHeadRevision () {
     #Get parameters
@@ -16,6 +23,25 @@ function getWorkingCopyRevision () {
     local __resultvar=$1
 
     eval $__resultvar=$(svn info $local_working_copy | grep Revision | cut -d' ' -f2)
+}
+
+function add () {
+    # Get parameters
+    __wcLocation=$1
+
+    # Create a new crontab
+    crontab -l > svn_notifier_crontab
+
+    # Echo new cron into cron file
+    echo "$crontab_interval_minute $crontab_interval_hour $crontab_interval_day_of_month $crontab_interval_month $crontab_interval_day_of_week svn-notifier-wc $1" >> svn_notifier_crontab
+
+    # Install new cron file
+    crontab svn_notifier_crontab
+
+    # Remove temporary cron file
+    rm svn_notifier_crontab
+
+    exit
 }
 
 # Execution
