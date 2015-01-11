@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Crontab interval values
 # crontab_interval_minute="*"          # Every 15 minutes
