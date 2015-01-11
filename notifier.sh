@@ -55,7 +55,7 @@ function notify () {
 if [ "$1" = "add" ]
     then
         local_working_copy=$2
-        local __wcMessage=$3
+        __wcMessage=$3
         add $local_working_copy $__wcMessage
     else
         local_working_copy=$1
