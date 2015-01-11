@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Global vars
-local_working_copy=$1
-
 # Crontab interval values
 crontab_interval_minute="*/15"          # Every 15 minutes
 crontab_interval_hour="*"               # Every hour
@@ -44,11 +41,21 @@ function add () {
     exit
 }
 
-# Execution
-getHeadRevision __headRevision
-getWorkingCopyRevision __wcRevision
+function notify () {
+    getHeadRevision __headRevision
+    getWorkingCopyRevision __wcRevision
 
-if [ "$__wcRevision" -lt "$__headRevision" ]
+    if [ "$__wcRevision" -lt "$__headRevision" ]
+        then
+            terminal-notifier -message "Werksite Development" -title "Working Copy Outdated"
+    fi
+}
+
+if [ "$1" = "add" ]
     then
-        terminal-notifier -message "Werksite Development" -title "Working Copy Outdated"
+        local_working_copy=$2
+        add $local_working_copy
+    else
+        local_working_copy=$1
+        notify
 fi
