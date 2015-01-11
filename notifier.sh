@@ -31,7 +31,7 @@ function add () {
     crontab -l > svn_notifier_crontab
 
     # Echo new cron into cron file
-    echo "$crontab_interval_minute  $crontab_interval_hour  $crontab_interval_day_of_month  $crontab_interval_month     $crontab_interval_day_of_week   svn-notifier-wc \"$local_working_copy\" \"$__wcMessage\"" >> svn_notifier_crontab
+    echo "$crontab_interval_minute  $crontab_interval_hour  $crontab_interval_day_of_month  $crontab_interval_month     $crontab_interval_day_of_week   svn-notifier-wc $local_working_copy $__wcMessage" >> svn_notifier_crontab
 
     # Install new cron file
     crontab svn_notifier_crontab
