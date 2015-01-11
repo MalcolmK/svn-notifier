@@ -23,3 +23,10 @@ $ chmod +x svn_notify_wc/notifier.sh
 $ ln -sf $PWD/svn_notify_wc/notifier.sh svn-notifier-wc
 ```
 
+# Uninstall
+## Mac OS X
+Unstalling can be done by deleting the folder and the symlink:
+```
+$ rm -rf ~/.bin/svn_notifier_wc
+$ rm -f ~/.bin/svn-notifier-wc
+```
