@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Crontab interval values
 # crontab_interval_minute="*"          # Every 15 minutes
@@ -64,7 +64,7 @@ function notify () {
 #         notify
 # fi
 
-local_working_copy=$1
-wcMessage=$2
+local_working_copy="/Users/Malcolm/Sites/dev.werksite.nl/public_html/malcolm/"
+wcMessage="Werksite Development"
 
 notify
