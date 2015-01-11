@@ -24,13 +24,14 @@ function getWorkingCopyRevision () {
 
 function add () {
     # Get parameters
-    __wcLocation=$1
+    local __wcLocation=$1
+    local __wcMessage=$2
 
     # Create a new crontab
     crontab -l > svn_notifier_crontab
 
     # Echo new cron into cron file
-    echo "$crontab_interval_minute $crontab_interval_hour $crontab_interval_day_of_month $crontab_interval_month $crontab_interval_day_of_week svn-notifier-wc $local_working_copy" >> svn_notifier_crontab
+    echo "$crontab_interval_minute $crontab_interval_hour $crontab_interval_day_of_month $crontab_interval_month $crontab_interval_day_of_week svn-notifier-wc $local_working_copy $__wcMessage" >> svn_notifier_crontab
 
     # Install new cron file
     crontab svn_notifier_crontab
@@ -47,15 +48,17 @@ function notify () {
 
     if [ "$__wcRevision" -lt "$__headRevision" ]
         then
-            terminal-notifier -message "Werksite Development" -title "Working Copy Outdated"
+            terminal-notifier -message "$wcMessage" -title "Working Copy Outdated"
     fi
 }
 
 if [ "$1" = "add" ]
     then
         local_working_copy=$2
-        add $local_working_copy
+        local __wcMessage=$3
+        add $local_working_copy $__wcMessage
     else
         local_working_copy=$1
+        wcMessage=$2
         notify
 fi
